@@ -51,7 +51,6 @@ func (r *RollingWindow) AppendBucket() {
 	}
 }
 
-// 获取当前队列末端的桶
 func (r *RollingWindow) GetBucket() *Bucket {
 	if len(r.buckets) == 0 {
 		r.AppendBucket()
@@ -59,19 +58,18 @@ func (r *RollingWindow) GetBucket() *Bucket {
 	return r.buckets[len(r.buckets)-1]
 }
 
-// 在桶中记录当次结果
 func (r *RollingWindow) RecordReqResult(result bool) {
 	r.GetBucket().Record(result)
 }
 
-// 展示当前滑动窗口的所有桶状态
+
 func (r *RollingWindow) ShowAllBucket() {
 	for _, v := range r.buckets {
 		fmt.Printf("id: [%v] | total: [%d] | failed: [%d]\n", v.Timestamp, v.Total, v.Failed)
 	}
 }
 
-// 启动滑动窗口
+
 func (r *RollingWindow) Launch() {
 	go func() {
 		for {
@@ -81,7 +79,6 @@ func (r *RollingWindow) Launch() {
 	}()
 }
 
-// 根据当前滑动窗口判断是否需要触发熔断
 func (r *RollingWindow) BreakJudgement() bool {
 	r.RLock()
 	defer r.RUnlock()
