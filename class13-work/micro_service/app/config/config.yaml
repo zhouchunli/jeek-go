@@ -17,4 +17,4 @@ mysql:
 rpcServer:
   backend1:
     name: "backend1"
-    address: "backend1:10001"
+    address: "backend1:8800"
